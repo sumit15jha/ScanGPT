@@ -1,0 +1,15 @@
+.footer {
+    position: absolute;
+    bottom: 0px;
+    font-size: 16px;
+    padding: 1.3rem;
+    text-align: center;
+    color: #f2eeee;
+    background-color: rgba(17, 17, 17, 0.968);
+    width: 100%;
+  }
+
+  .footer span {
+    color:#d44f2a;
+    font-weight: bold;
+  }
