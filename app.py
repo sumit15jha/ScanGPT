@@ -56,21 +56,25 @@ app = Flask(__name__)
 def index():
     if request.method == 'POST':
         file = request.files['image']
-        # Save the file to the local storage
-        upload_dir = 'uploads'
-        if not os.path.exists(upload_dir):
-            os.makedirs(upload_dir)
-        file_path = os.path.join(upload_dir, file.filename)
-        file.save(file_path)
-
-       
-        text = ocr_txt(file_path)
-
-        openai.api_key = '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'
-        completion=openai.Completion.create(engine="text-davinci-003",prompt=text,max_tokens=1000)
+        inputText = request.form.get('inputText')
+         openai.api_key = 'YOUR-KEY'
+       if not inputText:
+            upload_dir = 'uploads'
+            if not os.path.exists(upload_dir):
+                os.makedirs(upload_dir)
+            file_path = os.path.join(upload_dir, file.filename)
+            file.save(file_path)
+            text = ocr_txt(file_path)
+            completion=openai.Completion.create(engine="text-davinci-003",prompt=text,max_tokens=1000)
+        else:
+            text=inputText
+            completion=openai.Completion.create(engine="text-davinci-003",prompt=text,max_tokens=1000)
+        # completion=openai.Completion.create(engine="text-davinci-003",prompt=text,max_tokens=1000)
         
-       
-        return render_template('output.html', text=completion.choices[0]['text'])
+
+
+        # return render_template('output.html',PrintText=['PrintText'])       
+        return render_template('output.html', text=completion.choices[0]['text'],PrintText=text)
     else:
         return render_template('index.html')
 
